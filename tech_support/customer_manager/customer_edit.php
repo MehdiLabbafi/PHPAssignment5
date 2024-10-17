@@ -2,11 +2,11 @@
 <main>
     <h2><?php echo isset($customer) ? 'Update Customer' : 'Add Customer'; ?></h2>
     <form action="." method="post">
-        <!-- تغییر اکشن فرم به صورت دینامیک برای افزودن یا به‌روزرسانی مشتری -->
+        <!-- Change form action dynamically to add or update customer -->
         <input type="hidden" name="action" value="<?php echo isset($customer) ? 'update_customer' : 'add_customer'; ?>">
         
         <?php if (isset($customer)) : ?>
-            <!-- در صورت وجود مشتری، شناسه مشتری اضافه می‌شود -->
+            <!-- If there is a customer, the customer ID is added -->
             <input type="hidden" name="customer_id" value="<?php echo htmlspecialchars($customer['customerID']); ?>">
         <?php endif; ?>
 
@@ -89,7 +89,7 @@
         <?php endif; ?>
         <br><br>
 
-        <!-- تغییر دکمه ارسال به صورت دینامیک -->
+        <!-- change the submit button dynamically -->
         <input type="submit" value="<?php echo isset($customer) ? 'Update Customer' : 'Add Customer'; ?>">
     </form>
 
