@@ -38,6 +38,6 @@ This project enhances the Manage Customers application so that it allows users t
 | **Change** | **Description** |
 |------------|-----------------|
 | **Unified Form** | A single form is implemented to handle both adding new customers and updating existing customers. |
-| **Country Selection** | The country drop-down list defaults to **United States**, with 20 other countries available, including **Iran**. |
+| **Country Selection** | The country drop-down list defaults to **United States**, with 20 other countries available. |
 | **Dynamic Form Behavior** | The form dynamically displays either the **Add Customer** button or the **Update Customer** button depending on whether a new customer is being added or an existing one is being updated. |
 | **Validation Improvements** | Error messages are displayed in red for required fields that are left blank, and for improperly formatted phone numbers or email addresses. |
