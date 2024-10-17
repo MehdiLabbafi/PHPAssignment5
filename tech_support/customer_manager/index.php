@@ -2,7 +2,7 @@
 require('../model/database.php');
 require('../model/customer_db.php');
 
-// فعال کردن نمایش خطاها برای خطایابی
+// Enable display of errors for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -15,11 +15,11 @@ if ($action == NULL) {
     }
 }
 
-// صفحه جستجوی مشتریان
+// Customer search page
 if ($action == 'search_customers') {
     include('customer_search.php');
 
-// نمایش مشتریان پس از جستجو
+// Display customers after search
 } elseif ($action == 'display_customers') {
     $last_name = filter_input(INPUT_POST, 'last_name');
     if ($last_name == NULL || $last_name == FALSE) {
@@ -30,7 +30,7 @@ if ($action == 'search_customers') {
         include('customer_list.php');
     }
 
-// انتخاب مشتری برای ویرایش
+// Select client to edit
 } elseif ($action == 'select_customer') {
     $customer_id = filter_input(INPUT_POST, 'customer_id', FILTER_VALIDATE_INT);
     if ($customer_id == NULL || $customer_id == FALSE) {
@@ -41,7 +41,7 @@ if ($action == 'search_customers') {
         include('customer_edit.php');
     }
 
-// به‌روزرسانی مشتری
+// Update the client
 } elseif ($action == 'update_customer') {
     $customer_id = filter_input(INPUT_POST, 'customer_id', FILTER_VALIDATE_INT);
     $first_name = filter_input(INPUT_POST, 'first_name');
@@ -55,10 +55,10 @@ if ($action == 'search_customers') {
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password');
 
-    // تعریف آرایه خطاها
+    // Define the errors array
     $errors = [];
 
-    // اعتبارسنجی فیلدها
+    // Validate fields
     if (empty($first_name)) {
         $errors['first_name'] = "First name is required.";
     }
@@ -92,7 +92,7 @@ if ($action == 'search_customers') {
         $errors['password'] = "Password must be at least 6 characters long.";
     }
 
-    // اگر خطا وجود داشت، فرم با پیام‌های خطا نمایش داده شود
+    // If there is an error, display the form with error messages
     if (!empty($errors)) {
         $customer = [
             'customerID' => $customer_id,
@@ -109,12 +109,12 @@ if ($action == 'search_customers') {
         ];
         include('customer_edit.php');
     } else {
-        // به‌روزرسانی اطلاعات مشتری در دیتابیس
+        // Update customer information in the database
         update_customer($customer_id, $first_name, $last_name, $address, $city, $state, $postal_code, $country_code, $phone, $email, $password);
         header("Location: .?action=search_customers");
     }
 
-// افزودن مشتری جدید
+// Add new customer
 } elseif ($action == 'add_customer') {
     $first_name = filter_input(INPUT_POST, 'first_name');
     $last_name = filter_input(INPUT_POST, 'last_name');
@@ -127,7 +127,7 @@ if ($action == 'search_customers') {
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password');
 
-    // اعتبارسنجی مشابه برای افزودن مشتری جدید
+    // Similar validation for adding a new customer
     $errors = [];
     if (empty($first_name)) {
         $errors['first_name'] = "First name is required.";
@@ -142,14 +142,14 @@ if ($action == 'search_customers') {
     if (!empty($errors)) {
         include('customer_edit.php');
     } else {
-        // مشتری جدید اضافه شود
+        // Add new customer
         add_customer($first_name, $last_name, $address, $city, $state, $postal_code, $country_code, $phone, $email, $password);
         header("Location: .?action=search_customers");
     }
 
-// نمایش فرم افزودن مشتری جدید
+// Display the form to add a new customer
 } elseif ($action == 'show_add_form') {
-    $customer = null; // فرم بدون اطلاعات قبلی
+    $customer = null; // Form without prior information
     include('customer_edit.php');
 
 } else {
